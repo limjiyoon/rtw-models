@@ -1,11 +1,13 @@
 [project]
-name = "configmanagertemplate"
+name = "breakdown-transformer"
 version = "0.1.0"
 description = "Add your description here"
 authors = [
     { name = "limjiyoon", email = "luinpark@gmail.com" }
 ]
-dependencies = []
+dependencies = [
+    "torch>=2.5.1",
+]
 readme = "README.md"
 requires-python = ">= 3.12"
 
@@ -26,7 +28,7 @@ dev-dependencies = [
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/configmanagertemplate"]
+packages = ["src/breakdown_transformer"]
 
 [tool.ruff]
 # Enable pycodestyle (`E`) and Pyflakes (`F`) codes by default.
