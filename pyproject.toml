@@ -1,7 +1,7 @@
 [project]
-name = "breakdown-transformer"
+name = "rtw-models"
 version = "0.1.0"
-description = "Add your description here"
+description = "Reimplement the AI Models"
 authors = [
     { name = "limjiyoon", email = "luinpark@gmail.com" }
 ]
@@ -9,7 +9,7 @@ dependencies = [
     "torch>=2.5.1",
 ]
 readme = "README.md"
-requires-python = ">= 3.12"
+requires-python = "~= 3.12"
 
 [build-system]
 requires = ["hatchling"]
@@ -28,7 +28,7 @@ dev-dependencies = [
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/breakdown_transformer"]
+packages = ["src/rtw_models"]
 
 [tool.ruff]
 # Enable pycodestyle (`E`) and Pyflakes (`F`) codes by default.
@@ -55,7 +55,7 @@ lint.select = [
 
 # Allow autofix for all enabled rules (when `--fix`) is provided.
 lint.fixable = ["ALL"]
-lint.ignore = ["D104", "D406", "D407", "D408", "D409", "D203", "D213", "D417", "B905", "ANN002", "ANN003", "ANN401", "ANN204", "COM812", "D107", "N812"]
+lint.ignore = ["D104", "D406", "D407", "D408", "D409", "D203", "D213", "D417", "B905", "ANN001", "ANN002", "ANN003", "ANN401", "ANN204", "COM812", "D107", "N812"]
 
 # Exclude a variety of commonly ignored directories.
 lint.exclude = [
