@@ -91,7 +91,7 @@ class Transformer(nn.Module):
             d_model=config.d_model,
             d_ff=config.d_ff,
             n_heads=config.n_heads,
-            dropout_p=config.dropout,
+            dropout=config.dropout,
             n_layers=config.n_decoder_layers,
             device=config.device,
         )

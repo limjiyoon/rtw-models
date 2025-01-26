@@ -138,8 +138,8 @@ class Decoder(nn.Module):
 
     @staticmethod
     def make_model(
-        d_model: int, d_ff: int, n_heads: int, n_layers: int, dropout_p: float, device: str | torch.device
+        d_model: int, d_ff: int, n_heads: int, n_layers: int, dropout: float, device: str | torch.device
     ) -> Decoder:
         """Create the components of the decoder and combine them."""
-        decoder_layer = DecoderLayer.make_model(d_model, d_ff, n_heads, dropout_p, device)
+        decoder_layer = DecoderLayer.make_model(d_model, d_ff, n_heads, dropout, device)
         return Decoder(decoder_layer, n_layers)
