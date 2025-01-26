@@ -11,7 +11,7 @@ from rtw_models.transformer.decoder import Decoder
 from rtw_models.transformer.embedding import Embedding
 from rtw_models.transformer.encoder import Encoder
 from rtw_models.transformer.generator import Generator
-from rtw_models.transformer.positional_encoding import SinusoidalPoistionalEncoding
+from rtw_models.transformer.positional_encoding import SinusoidalPositionalEncoding
 
 
 @dataclass
@@ -97,11 +97,11 @@ class Transformer(nn.Module):
         )
         generator = Generator(d_model=config.d_model, vocab_size=config.tgt_vocab_size, device=config.device)
         src_embed = Embedding(vocab_size=config.src_vocab_size, d_model=config.d_model, device=config.device)
-        src_pos_encodings = SinusoidalPoistionalEncoding(
+        src_pos_encodings = SinusoidalPositionalEncoding(
             d_model=config.d_model, dropout=config.dropout, max_len=config.mas_seq_len, device=config.device
         )
         tgt_embed = Embedding(vocab_size=config.tgt_vocab_size, d_model=config.d_model, device=config.device)
-        tgt_pos_encodings = SinusoidalPoistionalEncoding(
+        tgt_pos_encodings = SinusoidalPositionalEncoding(
             d_model=config.d_model, dropout=config.dropout, max_len=config.mas_seq_len, device=config.device
         )
 

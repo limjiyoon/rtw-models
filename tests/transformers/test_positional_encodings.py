@@ -1,6 +1,6 @@
 import torch
 
-from rtw_models.transformer.positional_encoding import SinusoidalPoistionalEncoding
+from rtw_models.transformer.positional_encoding import SinusoidalPositionalEncoding
 
 
 class TestPositionalEncodings:
@@ -9,7 +9,7 @@ class TestPositionalEncodings:
         dropout = 0.0
         device = "cpu"
 
-        encoding = SinusoidalPoistionalEncoding(d_model=d_model, dropout=dropout, max_len=seq_len, device=device)
+        encoding = SinusoidalPositionalEncoding(d_model=d_model, dropout=dropout, max_len=seq_len, device=device)
         x = torch.ones((batch_size, seq_len, d_model))
         output = encoding(x)
 

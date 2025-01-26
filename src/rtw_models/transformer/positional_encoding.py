@@ -6,7 +6,7 @@ import torch
 from torch import nn
 
 
-class SinusoidalPoistionalEncoding(nn.Module):
+class SinusoidalPositionalEncoding(nn.Module):
     """Sinusoidal Positional Encoding."""
 
     def __init__(self, d_model: int, dropout: float, max_len: int, device: str | torch.device = "cpu"):
