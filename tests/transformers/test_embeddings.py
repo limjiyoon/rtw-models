@@ -4,7 +4,7 @@ from rtw_models.transformer.embeddings import Embedding
 
 
 class TestEmbeddings:
-    def test_embeddings_runnable(self):
+    def test_embeddings_is_executable(self):
         d_model, vocab_size = 4, 3
         embedding = Embedding(d_model=d_model, vocab_size=vocab_size, device="cpu")
 
