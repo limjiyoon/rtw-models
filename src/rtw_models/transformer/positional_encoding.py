@@ -36,5 +36,5 @@ class SinusoidalPositionalEncoding(nn.Module):
         """
         assert x.device == self.device, f"Layer device {self.device} and Input deivce {x.device} should be equivalent"
         pe_val = self.pe[:, : x.size(1)]
-        pe_val.require_grad = False
+        pe_val.requires_grad = False
         return self.dropout(x + pe_val)
