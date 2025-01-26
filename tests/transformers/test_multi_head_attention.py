@@ -51,16 +51,19 @@ class TestMultiHeadAttention:
         )
         query, key, value = x, x, x
         mask = (torch.triu(x, diagonal=1) == 0).to(device)
-        attn_values, attn_weights = attention(query=query, key=key, value=value, mask=mask, dropout=dropout)
+        mask_fill_value = -1e9
+        attn_values, attn_weights = attention(
+            query=query, key=key, value=value, mask=mask, dropout=dropout, mask_fill_value=mask_fill_value
+        )
 
         # Get Mask indices from mask
         non_mask_indices = torch.nonzero(mask, as_tuple=True)
         assert (
-            torch.all(attn_values[non_mask_indices] == -1e9),
+            torch.all(attn_values[non_mask_indices] == mask_fill_value),
             "Attention values should be -1e9 for masked indices",
         )
         assert (
-            torch.all(attn_values[not non_mask_indices] != -1e9),
+            torch.all(attn_values[not non_mask_indices] != mask_fill_value),
             "Attention values should not be -1e9 for non-masked indices",
         )
         assert (

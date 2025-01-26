@@ -8,7 +8,13 @@ from torch.nn import functional as F
 
 
 def attention(
-    query: torch.Tensor, key: torch.Tensor, value: torch.Tensor, mask: torch.Tensor | None, dropout: nn.Module
+    query: torch.Tensor,
+    key: torch.Tensor,
+    value: torch.Tensor,
+    mask: torch.Tensor | None,
+    dropout: nn.Module,
+    *,
+    mask_fill_value: float = -1e9,
 ) -> tuple[torch.Tensor, torch.Tensor]:
     """Compute the attention weights and the attended values.
 
@@ -18,6 +24,8 @@ def attention(
         value (torch.Tensor): Value tensor of shape (batch_size, n_heads, seq_len, d_key).
         dropout (nn.Module): Dropout module to apply to the attention weights.
         mask (torch.Tensor | None, optional): Mask tensor of shape (batch_size, seq_len, seq_len). Defaults to None.
+        mask_fill_value (float, optional, keyword only): Value to replace the masked values with. Defaults to -1e9.
+
 
     Returns:
         tuple[torch.Tensor, torch.Tensor]: A tuple containing:
@@ -32,7 +40,7 @@ def attention(
     scores = torch.matmul(query, key.transpose(-2, -1)) / math.sqrt(d_model)
 
     if mask is not None:
-        scores = scores.masked_fill(mask == 0, -1e9)
+        scores = scores.masked_fill(mask == 0, mask_fill_value)
 
     # p_attn: (batch_size, n_heads, seq_len, seq_len)
     attn_weights = F.softmax(scores, dim=-1)
