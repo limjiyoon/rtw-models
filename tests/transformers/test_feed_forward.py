@@ -1,6 +1,6 @@
 import torch
 
-from rtw_models.transformer.feed_foward import FeedForward
+from rtw_models.transformer.feed_forward import FeedForward
 
 
 class TestFeedForward:
