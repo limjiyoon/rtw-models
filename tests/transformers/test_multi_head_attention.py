@@ -5,7 +5,7 @@ from rtw_models.transformer.mutli_head_attention import attention, MultiHeadAtte
 
 
 class TestMultiHeadAttention:
-    def test_attention_is_executable(self):
+    def test_attention_executable(self):
         """Check if the attention function is executable.
 
         Checklist:
