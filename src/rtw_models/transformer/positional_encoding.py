@@ -12,6 +12,7 @@ class SinusoidalPoistionalEncoding(nn.Module):
     def __init__(self, d_model: int, dropout: float, max_len: int, device: str | torch.device = "cpu"):
         super().__init__()
         assert d_model % 2 == 0, "d_model should be even"
+        assert 0.0 <= dropout <= 1.0, "Dropout should be in range [0, 1]"
         self.dropout = nn.Dropout(p=dropout) if dropout != 0 else nn.Identity()
 
         pe = torch.zeros(max_len, d_model, device=device)
