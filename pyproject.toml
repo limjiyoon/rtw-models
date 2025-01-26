@@ -60,7 +60,7 @@ lint.select = [
 
 # Allow autofix for all enabled rules (when `--fix`) is provided.
 lint.fixable = ["ALL"]
-lint.ignore = ["D104", "D406", "D407", "D408", "D409", "D203", "D213", "D413", "D417", "B905", "ANN101", "ANN002", "ANN003", "ANN401", "ANN204", "COM812", "D107", "N812"]
+lint.ignore = ["D104", "D406", "D407", "D408", "D409", "D203", "D213", "D413", "D417", "B905", "ANN002", "ANN003", "ANN401", "ANN204", "COM812", "D107", "N812"]
 
 # Exclude a variety of commonly ignored directories.
 lint.exclude = [
