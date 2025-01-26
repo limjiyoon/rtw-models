@@ -8,7 +8,7 @@ from torch.nn import functional as F
 
 
 def attention(
-    query: torch.Tensor, key: torch.Tensor, value: torch.Tensor, dropout: nn.Module, mask: torch.Tensor | None = None
+    query: torch.Tensor, key: torch.Tensor, value: torch.Tensor, mask: torch.Tensor | None, dropout: nn.Module
 ) -> tuple[torch.Tensor, torch.Tensor]:
     """Compute the attention weights and the attended values.
 
@@ -82,7 +82,7 @@ class MultiHeadAttention(nn.Module):
         q = self.q_layer(query).view(batch_size, seq_len, self.n_heads, self.d_key).transpose(1, 2)
         k = self.k_layer(key).view(batch_size, seq_len, self.n_heads, self.d_key).transpose(1, 2)
         v = self.v_layer(value).view(batch_size, seq_len, self.n_heads, self.d_key).transpose(1, 2)
-        attn_value_per_head, attn_weight_per_head = attention(q, k, v, mask=mask, dropout=self.dropout)
+        attn_value_per_head, attn_weight_per_head = attention(q, k, v, dropout=self.dropout, mask=mask)
 
         attn_value = attn_value_per_head.transpose(1, 2).contiguous().view(batch_size, seq_len, d_model)
 
