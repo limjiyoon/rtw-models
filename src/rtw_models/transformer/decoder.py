@@ -27,7 +27,7 @@ class DecoderLayer(nn.Module):
         self.cross_attn = cross_attn
         self.feed_forward = feed_forward
         self.dropout_p = dropout
-        self.dropout = nn.Dropout if dropout > 0 else nn.Identity
+        self.dropout = nn.Dropout() if dropout > 0 else nn.Identity()
         self.device = torch.device(device)
         self.norm = norm
 
@@ -97,13 +97,13 @@ class DecoderLayer(nn.Module):
         )
 
     @staticmethod
-    def make_model(d_model: int, d_ff: int, n_heads: int, dropout_p: float, device: str | torch.device) -> DecoderLayer:
+    def make_model(d_model: int, d_ff: int, n_heads: int, dropout: float, device: str | torch.device) -> DecoderLayer:
         """Create the components of the decoder layer and combine them."""
-        self_attn = MultiHeadAttention(d_model=d_model, n_heads=n_heads, dropout=dropout_p, device=device)
-        cross_attn = MultiHeadAttention(d_model=d_model, n_heads=n_heads, dropout=dropout_p, device=device)
-        feed_forward = FeedForward(d_model=d_model, d_ff=d_ff, dropout=dropout_p, device=device)
+        self_attn = MultiHeadAttention(d_model=d_model, n_heads=n_heads, dropout=dropout, device=device)
+        cross_attn = MultiHeadAttention(d_model=d_model, n_heads=n_heads, dropout=dropout, device=device)
+        feed_forward = FeedForward(d_model=d_model, d_ff=d_ff, dropout=dropout, device=device)
         norm = nn.LayerNorm(d_model)
-        return DecoderLayer(self_attn, cross_attn, feed_forward, norm, dropout_p, device)
+        return DecoderLayer(self_attn, cross_attn, feed_forward, norm, dropout, device)
 
 
 class Decoder(nn.Module):
