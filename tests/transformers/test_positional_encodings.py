@@ -1,6 +1,6 @@
 import torch
 
-from rtw_models.transformer.positional_encodings import SinusoidalPoistionalEncoding
+from rtw_models.transformer.positional_encoding import SinusoidalPoistionalEncoding
 
 
 class TestPositionalEncodings:

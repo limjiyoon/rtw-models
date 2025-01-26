@@ -1,6 +1,6 @@
 import torch
 
-from rtw_models.transformer.embeddings import Embedding
+from rtw_models.transformer.embedding import Embedding
 
 
 class TestEmbeddings:
