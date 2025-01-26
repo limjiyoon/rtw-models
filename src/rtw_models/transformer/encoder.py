@@ -5,6 +5,9 @@ from __future__ import annotations
 import torch
 from torch import nn
 
+from rtw_models.transformer.feed_foward import FeedForward
+from rtw_models.transformer.mutli_head_attention import MultiHeadAttention
+
 
 class EncoderLayer(nn.Module):
     """Mutli-Head Self Attention + Feed Forward Layer.
@@ -63,6 +66,14 @@ class EncoderLayer(nn.Module):
         """Create a copy of the encoder layer."""
         return EncoderLayer(self.self_attn, self.ff_layer, self.norm, self.dropout_p, self.device)
 
+    @staticmethod
+    def make_model(d_model: int, d_ff: int, n_heads: int, dropout_p: float, device: str | torch.device) -> EncoderLayer:
+        """Create the components of the encoder layer and combine them."""
+        self_attn = MultiHeadAttention(d_model=d_model, n_heads=n_heads, dropout=dropout_p, device=device)
+        feed_forward = FeedForward(d_model=d_model, d_ff=d_ff, dropout=dropout_p, device=device)
+        norm = nn.LayerNorm(d_model)
+        return EncoderLayer(self_attn, feed_forward, norm, dropout_p, device)
+
 
 class Encoder(nn.Module):
     """Encoder of the Transformer Model.
@@ -87,3 +98,13 @@ class Encoder(nn.Module):
         for layer in self.layers:
             x = layer(x, mask)
         return x
+
+    @staticmethod
+    def make_model(
+        n_layers: int, d_model: int, d_ff: int, n_heads: int, dropout_p: float, device: str | torch.device
+    ) -> Encoder:
+        """Create the components of the encoder and combine them."""
+        encoder_layer = EncoderLayer.make_model(
+            d_model=d_model, d_ff=d_ff, n_heads=n_heads, dropout_p=dropout_p, device=device
+        )
+        return Encoder(encoder_layer, n_layers)

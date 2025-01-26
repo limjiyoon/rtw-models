@@ -45,7 +45,7 @@ def attention(
 class MultiHeadAttention(nn.Module):
     """Multi-head attention layer."""
 
-    def __init__(self, n_heads: int, d_model: int, dropout: float, device: str):
+    def __init__(self, n_heads: int, d_model: int, dropout: float, device: str | torch.device):
         super().__init__()
         assert d_model % n_heads == 0, f"d_model ({d_model}) should be divisible by n_heads ({n_heads})."
         assert 0.0 <= dropout <= 1.0, "Dropout should be in range [0, 1]"

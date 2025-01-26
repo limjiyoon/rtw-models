@@ -5,6 +5,9 @@ from __future__ import annotations
 import torch
 from torch import nn
 
+from rtw_models.transformer.feed_foward import FeedForward
+from rtw_models.transformer.mutli_head_attention import MultiHeadAttention
+
 
 class DecoderLayer(nn.Module):
     """Decoder Layer of the Transformer Model."""
@@ -93,6 +96,15 @@ class DecoderLayer(nn.Module):
             self.device,
         )
 
+    @staticmethod
+    def make_model(d_model: int, d_ff: int, n_heads: int, dropout_p: float, device: str | torch.device) -> DecoderLayer:
+        """Create the components of the decoder layer and combine them."""
+        self_attn = MultiHeadAttention(d_model=d_model, n_heads=n_heads, dropout=dropout_p, device=device)
+        cross_attn = MultiHeadAttention(d_model=d_model, n_heads=n_heads, dropout=dropout_p, device=device)
+        feed_forward = FeedForward(d_model=d_model, d_ff=d_ff, dropout=dropout_p, device=device)
+        norm = nn.LayerNorm(d_model)
+        return DecoderLayer(self_attn, cross_attn, feed_forward, norm, dropout_p, device)
+
 
 class Decoder(nn.Module):
     """Stack of Decoder Layers."""
@@ -123,3 +135,11 @@ class Decoder(nn.Module):
         for layer in self.layers:
             x = layer(x, past_key_values, self_mask, cross_mask)
         return x
+
+    @staticmethod
+    def make_model(
+        d_model: int, d_ff: int, n_heads: int, n_layers: int, dropout_p: float, device: str | torch.device
+    ) -> Decoder:
+        """Create the components of the decoder and combine them."""
+        decoder_layer = DecoderLayer.make_model(d_model, d_ff, n_heads, dropout_p, device)
+        return Decoder(decoder_layer, n_layers)
