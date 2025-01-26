@@ -19,6 +19,15 @@ class EncoderLayer(nn.Module):
     def __init__(
         self, self_attn: nn.Module, feed_forward: nn.Module, norm: nn.Module, dropout: float, device: str | torch.device
     ):
+        """Initialize the Encoder Layer.
+
+        Args:
+           self_attn: MultiHeadAttention module
+           feed_forward: Positionwise Feed Forward network
+           norm: Normalization layer
+           dropout: dropout probability
+           device: torch device or device string to move the tensors
+        """
         super().__init__()
         assert 0.0 <= dropout <= 1.0, "Dropout should be in range [0, 1]"
         self.self_attn = self_attn
