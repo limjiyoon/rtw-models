@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 
-from rtw_models.transformer.mutli_head_attention import attention
+from rtw_models.transformer.mutli_head_attention import attention, MultiHeadAttention
 
 
 class TestMultiHeadAttention:
@@ -38,10 +38,6 @@ class TestMultiHeadAttention:
         assert (
             attn_weights.device == device
         ), f"Attention weights device {attn_weights.device} should be same as input device {device}"
-        assert (
-            torch.allclose(attn_values, torch.matmul(attn_weights, value)),
-            f"Attention values should be equal to the matrix multiplication of attention weights and values",
-        )
 
     def test_mask_apply_to_attention(self):
         batch_size, n_heads, seq_len, d_model = 2, 3, 4, 4
@@ -58,20 +54,40 @@ class TestMultiHeadAttention:
         attn_values, attn_weights = attention(query=query, key=key, value=value, mask=mask, dropout=dropout)
 
         # Get Mask indices from mask
-        mask_indices = torch.nonzero(mask, as_tuple=True)
+        non_mask_indices = torch.nonzero(mask, as_tuple=True)
         assert (
-            torch.all(attn_values[mask_indices] == -1e9),
+            torch.all(attn_values[non_mask_indices] == -1e9),
             "Attention values should be -1e9 for masked indices",
         )
         assert (
-            torch.all(attn_values[not mask_indices] != -1e9),
+            torch.all(attn_values[not non_mask_indices] != -1e9),
             "Attention values should not be -1e9 for non-masked indices",
         )
         assert (
-            torch.all(attn_weights[mask_indices] == 0),
+            torch.all(attn_weights[non_mask_indices] == 0),
             "Attention weights should be 0 for masked indices",
         )
         assert (
-            torch.all(attn_weights[not mask_indices] != 0),
+            torch.all(attn_weights[not non_mask_indices] != 0),
             "Attention weights should not be 0 for non-masked indices",
         )
+
+    def test_multi_head_attention_is_executable(self):
+        """Check if the MultiHeadAttention layer is executable.
+
+        Checklist:
+            - Check the shape of the output tensor.
+            - Check the device of the output tensor.
+        """
+        # d_model should be divisible by n_heads
+        batch_size, n_heads, seq_len, d_model = 2, 3, 4, 6
+        dropout = 0.0
+        device = "cpu"
+
+        mha = MultiHeadAttention(n_heads=n_heads, d_model=d_model, dropout=dropout, device=device)
+        x = torch.ones((batch_size, seq_len, d_model))
+        output = mha(query=x, key=x, value=x, mask=None)
+
+        assert output.shape == x.shape, "Output shape should be same as input"
+        assert output.device == x.device, "Output device should be same as input device"
+        assert torch.allclose(output[0], output[1]), "Output should be same for all batches"

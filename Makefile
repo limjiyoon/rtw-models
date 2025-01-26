@@ -12,7 +12,7 @@ format-check:
 
 lint:
 	@echo "Linting code..."
-	rye run pyright --project src
+	rye run pyright src
 	rye lint src
 
 test:
