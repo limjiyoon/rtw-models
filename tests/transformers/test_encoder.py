@@ -16,6 +16,5 @@ class TestEncoder:
         assert output.shape == x.shape, f"Output shape {output.shape} should be same as input shape {x.shape}"
         assert output.device == x.device, f"Output device {output.device} should be same as input device {x.device}"
 
-
     def test_encoder_executable(self):
         assert True
