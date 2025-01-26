@@ -50,7 +50,7 @@ class MultiHeadAttention(nn.Module):
         assert d_model % n_heads == 0, f"d_model ({d_model}) should be divisible by n_heads ({n_heads})."
         assert 0.0 <= dropout <= 1.0, "Dropout should be in range [0, 1]"
 
-        self.device = device
+        self.device = torch.device(device)
         self.d_key = d_model // n_heads
         self.n_heads = n_heads
 

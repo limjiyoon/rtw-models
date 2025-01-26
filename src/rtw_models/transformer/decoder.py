@@ -28,7 +28,7 @@ class DecoderLayer(nn.Module):
         self.feed_forward = feed_forward
         self.dropout_p = dropout
         self.dropout = nn.Dropout if dropout > 0 else nn.Identity
-        self.device = device
+        self.device = torch.device(device)
         self.norm = norm
 
     def forward(

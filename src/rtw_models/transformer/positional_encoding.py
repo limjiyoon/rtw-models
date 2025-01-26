@@ -14,8 +14,9 @@ class SinusoidalPoistionalEncoding(nn.Module):
         assert d_model % 2 == 0, "d_model should be even"
         assert 0.0 <= dropout <= 1.0, "Dropout should be in range [0, 1]"
         self.dropout = nn.Dropout(p=dropout) if dropout != 0 else nn.Identity()
+        self.device = torch.device(device)
 
-        pe = torch.zeros(max_len, d_model, device=device)
+        pe = torch.zeros(max_len, d_model, device=self.device)
 
         div_term = torch.exp(-torch.arange(0, d_model, 2, device=device) * math.log(10000) / d_model)
         position = torch.arange(0, max_len, device=device)[:, None]
@@ -34,8 +35,8 @@ class SinusoidalPoistionalEncoding(nn.Module):
             torch.Tensor: Output tensor with embedded representations + positinal encodings.
         """
         assert (
-            x.device == self.pe.device
-        ), f"Layer device {self.pe.device} and Input deivce {x.device} should be equivalent"
+            x.device == self.device
+        ), f"Layer device {self.device} and Input deivce {x.device} should be equivalent"
         pe_val = self.pe[:, : x.size(1)]
         pe_val.require_grad = False
         return self.dropout(x + pe_val)

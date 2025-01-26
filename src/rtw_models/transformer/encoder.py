@@ -37,7 +37,7 @@ class EncoderLayer(nn.Module):
         self.ff_layer = feed_forward
         self.dropout_p = dropout
         self.dropout = nn.Dropout if dropout > 0 else nn.Identity
-        self.device = device
+        self.device = torch.device(device)
         self.norm = norm
 
     def forward(self, x: torch.Tensor, mask: torch.Tensor | None = None) -> torch.Tensor:
