@@ -85,6 +85,9 @@ lint.exclude = [
     "venv",
 ]
 
+# Configuration of the ruff rules.
+lint.pylint.max-args = 13
+
 
 [tool.pyright]
 reportMissingImports = true
