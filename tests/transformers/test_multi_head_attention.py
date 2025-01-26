@@ -40,7 +40,7 @@ class TestMultiHeadAttention:
         ), f"Attention weights device {attn_weights.device} should be same as input device {device}"
 
     def test_mask_apply_to_attention(self):
-        batch_size, n_heads, seq_len, d_model = 2, 3, 4, 4
+        batch_size, n_heads, seq_len, d_model = 1, 2, 4, 4
         dropout = nn.Identity()
         device = torch.device("cpu")
 
@@ -50,30 +50,18 @@ class TestMultiHeadAttention:
             .reshape(batch_size, n_heads, seq_len, d_model)
         )
         query, key, value = x, x, x
-        mask = (torch.triu(x, diagonal=1) == 0).to(device)
+        mask = torch.ones((1, seq_len, seq_len))
+        mask[:, 2:, 2:] = 0
+
         mask_fill_value = -1e9
         attn_values, attn_weights = attention(
             query=query, key=key, value=value, mask=mask, dropout=dropout, mask_fill_value=mask_fill_value
         )
 
-        # Get Mask indices from mask
-        non_mask_indices = torch.nonzero(mask, as_tuple=True)
-        assert (
-            torch.all(attn_values[non_mask_indices] == mask_fill_value),
-            "Attention values should be -1e9 for masked indices",
-        )
-        assert (
-            torch.all(attn_values[not non_mask_indices] != mask_fill_value),
-            "Attention values should not be -1e9 for non-masked indices",
-        )
-        assert (
-            torch.all(attn_weights[non_mask_indices] == 0),
-            "Attention weights should be 0 for masked indices",
-        )
-        assert (
-            torch.all(attn_weights[not non_mask_indices] != 0),
-            "Attention weights should not be 0 for non-masked indices",
-        )
+        assert attn_weights[:, :, 2:, 2:].sum() == 0., "Masked area of attn_weights should be zero"
+        assert torch.allclose(attn_values, torch.matmul(attn_weights, value)), \
+            f"Attention values should be equivalent as weighted sum of values"
+
 
     def test_multi_head_attention_is_executable(self):
         """Check if the MultiHeadAttention layer is executable.
