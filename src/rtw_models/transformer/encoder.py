@@ -101,10 +101,10 @@ class Encoder(nn.Module):
 
     @staticmethod
     def make_model(
-        n_layers: int, d_model: int, d_ff: int, n_heads: int, dropout_p: float, device: str | torch.device
+        n_layers: int, d_model: int, d_ff: int, n_heads: int, dropout: float, device: str | torch.device
     ) -> Encoder:
         """Create the components of the encoder and combine them."""
         encoder_layer = EncoderLayer.make_model(
-            d_model=d_model, d_ff=d_ff, n_heads=n_heads, dropout_p=dropout_p, device=device
+            d_model=d_model, d_ff=d_ff, n_heads=n_heads, dropout_p=dropout, device=device
         )
         return Encoder(encoder_layer, n_layers)
