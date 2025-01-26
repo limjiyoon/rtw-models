@@ -50,8 +50,9 @@ class EncoderLayer(nn.Module):
         Returns:
             torch.Tensor: Output tensor of shape (batch_size, seq_len, d_model)
         """
-        assert x.device == self.device, \
-            f"Input tensor device ({x.device}) and model device ({self.device })should be equivalent"
+        assert (
+            x.device == self.device
+        ), f"Input tensor device ({x.device}) and model device ({self.device })should be equivalent"
         hidden = self.self_attn(x, x, x, mask)
         attn_val = self.norm(x + self.dropout(hidden))
         assert attn_val.device == self.device, f"Device mismatch: {attn_val.device=} != {self.device=}"
