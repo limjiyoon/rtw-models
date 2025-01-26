@@ -27,6 +27,6 @@ class Embedding(nn.Module):
             Multiply by scale to keep the variance of the embedding constant
         """
         assert (
-            x.device == self.layer.device
-        ), f"Layer device {self.layer.device} and Input deivce {x.device} should be equivalent"
+            x.device == self.layer.weight.device
+        ), f"Layer device {self.layer.weight.device} and Input deivce {x.device} should be equivalent"
         return self.layer(x) * self.scale
