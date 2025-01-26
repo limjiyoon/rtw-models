@@ -26,18 +26,14 @@ class TestMultiHeadAttention:
         mask = torch.ones((batch_size, 1, seq_len, seq_len), device=device)
         attn_values, attn_weights = attention(query=query, key=key, value=value, mask=mask, dropout=dropout)
 
-        assert (
-            attn_values.shape == x.shape
-        ), f"Attention values shape ({attn_values.shape}) should be same as value shape {value.shape}"
-        assert (
-            attn_values.device == device
-        ), f"Attention values device {attn_values.device} should be same as input device {device}"
-        assert (
-            attn_weights.shape == (batch_size, n_heads, seq_len, seq_len)
-        ), f"Attention weights shape should be ({batch_size}, {n_heads}, {seq_len}, {seq_len}) but got {attn_weights.shape}"
-        assert (
-            attn_weights.device == device
-        ), f"Attention weights device {attn_weights.device} should be same as input device {device}"
+        assert attn_values.shape == x.shape, \
+            f"Attention values shape ({attn_values.shape}) should be same as value shape {value.shape}"
+        assert attn_values.device == device, \
+            f"Attention values device {attn_values.device} should be same as input device {device}"
+        assert attn_weights.shape == (batch_size, n_heads, seq_len, seq_len), \
+            f"Attention weights shape should be ({batch_size}, {n_heads}, {seq_len}, {seq_len}) but got {attn_weights.shape}"
+        assert attn_weights.device == device, \
+            f"Attention weights device {attn_weights.device} should be same as input device {device}"
 
     def test_mask_apply_to_attention(self):
         batch_size, n_heads, seq_len, d_model = 1, 2, 4, 4

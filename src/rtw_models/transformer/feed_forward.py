@@ -33,7 +33,6 @@ class FeedForward(nn.Module):
         Returns:
         torch.Tensor: Output tensor of shape (batch_size, seq_len, d_model).
         """
-        assert (
-            x.device == self.device
-        ), f"Input tensor device {x.device} and model device {self.device} should be equivalent."
+        assert x.device == self.device, \
+            f"Input tensor device {x.device} and model device {self.device} should be equivalent."
         return self.layers(x)

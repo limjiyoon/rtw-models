@@ -18,7 +18,7 @@ class SinusoidalPositionalEncoding(nn.Module):
 
         pe = torch.zeros(max_len, d_model, device=self.device)
 
-        div_term = torch.exp(-torch.arange(0, d_model, 2, device=device) * math.log(10000) / d_model)
+        div_term = torch.exp(-torch.arange(0, d_model, 2, device=self.device) * math.log(10000) / d_model)
         position = torch.arange(0, max_len, device=device)[:, None]
 
         pe[:, 0::2] = torch.sin(position * div_term)

@@ -54,12 +54,10 @@ class DecoderLayer(nn.Module):
             torch.Tensor: Decoded tensor
                           Shape: (batch_size, seq_len, d_model).
         """
-        assert (
-            x.device == self.device
-        ), f"Input tensor device ({x.device}) and model device ({self.device}) should be equivalent"
-        assert (
-            past_key_values.device == self.device
-        ), f"Past key values device ({past_key_values.device}) and model device ({self.device}) should be equivalent"
+        assert x.device == self.device,\
+            f"Input tensor device ({x.device}) and model device ({self.device}) should be equivalent"
+        assert past_key_values.device == self.device, \
+            f"Past key values device ({past_key_values.device}) and model device ({self.device}) should be equivalent"
 
         # x: (batch_size, seq_len, d_model)
         # self_attn_val: (batch_size, seq_len, d_model)

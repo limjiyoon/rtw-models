@@ -26,7 +26,7 @@ class TransformerConfig:
     d_ff: int
     n_heads: int
     dropout: float
-    mas_seq_len: int
+    max_seq_len: int
     device: str | torch.device
 
 
@@ -98,11 +98,11 @@ class Transformer(nn.Module):
         generator = Generator(d_model=config.d_model, vocab_size=config.tgt_vocab_size, device=config.device)
         src_embed = Embedding(vocab_size=config.src_vocab_size, d_model=config.d_model, device=config.device)
         src_pos_encodings = SinusoidalPositionalEncoding(
-            d_model=config.d_model, dropout=config.dropout, max_len=config.mas_seq_len, device=config.device
+            d_model=config.d_model, dropout=config.dropout, max_len=config.max_seq_len, device=config.device
         )
         tgt_embed = Embedding(vocab_size=config.tgt_vocab_size, d_model=config.d_model, device=config.device)
         tgt_pos_encodings = SinusoidalPositionalEncoding(
-            d_model=config.d_model, dropout=config.dropout, max_len=config.mas_seq_len, device=config.device
+            d_model=config.d_model, dropout=config.dropout, max_len=config.max_seq_len, device=config.device
         )
 
         return Transformer(
