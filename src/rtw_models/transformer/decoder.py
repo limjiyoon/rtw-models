@@ -101,7 +101,7 @@ class DecoderLayer(nn.Module):
         """Create the components of the decoder layer and combine them."""
         self_attn = MultiHeadAttention(d_model=d_model, n_heads=n_heads, dropout=dropout, device=device)
         cross_attn = MultiHeadAttention(d_model=d_model, n_heads=n_heads, dropout=dropout, device=device)
-        feed_forward = FeedForward(d_model=d_model, d_ff=d_ff, dropout=dropout, device=device)
+        feed_forward = FeedForward(d_model=d_model, d_ff=d_ff, dropout=dropout, norm=nn.ReLU(), device=device)
         norm = nn.LayerNorm(d_model)
         return DecoderLayer(self_attn, cross_attn, feed_forward, norm, dropout, device)
 

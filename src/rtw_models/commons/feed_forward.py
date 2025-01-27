@@ -15,12 +15,12 @@ class FeedForward(nn.Module):
         - The Positionwise Feed Forward network ensures even distribution of information across all heads.
     """
 
-    def __init__(self, d_model: int, d_ff: int, dropout: float, device: str | torch.device):
+    def __init__(self, d_model: int, d_ff: int, dropout: float, norm: nn.Module, device: str | torch.device):
         super().__init__()
         self.device = torch.device(device)
         self.layers = nn.Sequential(
             nn.Linear(d_model, d_ff, device=self.device),
-            nn.ReLU(),
+            norm,
             nn.Dropout(dropout) if dropout > 0 else nn.Identity(),
             nn.Linear(d_ff, d_model, device=self.device),
         )

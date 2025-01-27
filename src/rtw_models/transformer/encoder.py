@@ -70,7 +70,7 @@ class EncoderLayer(nn.Module):
     def make_model(d_model: int, d_ff: int, n_heads: int, dropout_p: float, device: str | torch.device) -> EncoderLayer:
         """Create the components of the encoder layer and combine them."""
         self_attn = MultiHeadAttention(d_model=d_model, n_heads=n_heads, dropout=dropout_p, device=device)
-        feed_forward = FeedForward(d_model=d_model, d_ff=d_ff, dropout=dropout_p, device=device)
+        feed_forward = FeedForward(d_model=d_model, d_ff=d_ff, dropout=dropout_p, norm=nn.ReLU(), device=device)
         norm = nn.LayerNorm(d_model)
         return EncoderLayer(self_attn, feed_forward, norm, dropout_p, device)
 
