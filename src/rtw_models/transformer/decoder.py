@@ -27,7 +27,7 @@ class DecoderLayer(nn.Module):
         self.cross_attn = cross_attn
         self.feed_forward = feed_forward
         self.dropout_p = dropout
-        self.dropout = nn.Dropout() if dropout > 0 else nn.Identity()
+        self.dropout = nn.Dropout(p=dropout) if dropout > 0 else nn.Identity()
         self.device = torch.device(device)
         self.norm = norm
 

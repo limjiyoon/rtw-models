@@ -67,7 +67,7 @@ class Transformer(nn.Module):
     def make_model(
         config: TransformerConfig,
     ) -> Transformer:
-        """Create the components of the transforme and combine them.
+        """Create the components of the transformer and combine them.
 
         Args:
             config (TransformerConfig): Configuration for the transformer model.

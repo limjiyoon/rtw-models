@@ -36,7 +36,7 @@ class EncoderLayer(nn.Module):
         self.self_attn = self_attn
         self.ff_layer = feed_forward
         self.dropout_p = dropout
-        self.dropout = nn.Dropout() if dropout > 0 else nn.Identity()
+        self.dropout = nn.Dropout(p=dropout) if dropout > 0 else nn.Identity()
         self.device = torch.device(device)
         self.norm = norm
 

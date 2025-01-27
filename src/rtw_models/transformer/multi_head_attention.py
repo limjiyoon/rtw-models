@@ -90,7 +90,7 @@ class MultiHeadAttention(nn.Module):
         q = self.q_layer(query).view(batch_size, seq_len, self.n_heads, self.d_key).transpose(1, 2)
         k = self.k_layer(key).view(batch_size, seq_len, self.n_heads, self.d_key).transpose(1, 2)
         v = self.v_layer(value).view(batch_size, seq_len, self.n_heads, self.d_key).transpose(1, 2)
-        attn_value_per_head, attn_weight_per_head = attention(q, k, v, dropout=self.dropout, mask=mask)
+        attn_value_per_head, _ = attention(q, k, v, dropout=self.dropout, mask=mask)
 
         attn_value = attn_value_per_head.transpose(1, 2).contiguous().view(batch_size, seq_len, d_model)
 
