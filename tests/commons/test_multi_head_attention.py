@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 
-from rtw_models.commons.multi_head_attention import attention, MultiHeadAttention
+from rtw_models.commons.multi_head_attention import MultiHeadAttention, attention
 
 
 class TestMultiHeadAttention:
@@ -61,7 +61,7 @@ class TestMultiHeadAttention:
         assert attn_weights[:, :, 2:, 2:].sum() == 0.0, "Masked area of attn_weights should be zero"
         assert torch.allclose(
             attn_values, torch.matmul(attn_weights, value)
-        ), f"Attention values should be equivalent as weighted sum of values"
+        ), "Attention values should be equivalent as weighted sum of values"
 
     def test_multi_head_attention_is_executable(self):
         """Check if the MultiHeadAttention layer is executable.

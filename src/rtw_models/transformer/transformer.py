@@ -7,11 +7,11 @@ from dataclasses import dataclass
 import torch
 from torch import nn
 
-from rtw_models.transformer.decoder import Decoder
 from rtw_models.commons.embedding import Embedding
-from rtw_models.transformer.encoder import Encoder
 from rtw_models.commons.generator import Generator
 from rtw_models.commons.positional_encoding import SinusoidalPositionalEncoding
+from rtw_models.transformer.decoder import Decoder
+from rtw_models.transformer.encoder import Encoder
 
 
 @dataclass

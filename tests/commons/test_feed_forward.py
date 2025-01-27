@@ -1,4 +1,5 @@
 import torch
+from torch import nn
 
 from rtw_models.commons.feed_forward import FeedForward
 
@@ -8,7 +9,7 @@ class TestFeedForward:
         batch_size, d_model, d_ff, dropout = 2, 4, 8, 0.0
         device = torch.device("cpu")
 
-        feed_forward = FeedForward(d_model=d_model, d_ff=d_ff, dropout=dropout, device=device)
+        feed_forward = FeedForward(d_model=d_model, d_ff=d_ff, dropout=dropout, norm=nn.ReLU(), device=device)
         x = torch.randn((batch_size, d_model), device=device)
         output = feed_forward(x)
 

@@ -1,6 +1,6 @@
 import torch
 
-from rtw_models.transformer.encoder import EncoderLayer, Encoder
+from rtw_models.transformer.encoder import Encoder, EncoderLayer
 
 
 class TestEncoder:

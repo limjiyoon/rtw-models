@@ -1,6 +1,6 @@
 import torch
 
-from rtw_models.commons.generate_mask import key_pad_mask, subsequent_mask, make_tgt_mask
+from rtw_models.commons.generate_mask import key_pad_mask, make_tgt_mask, subsequent_mask
 
 
 def test_key_pad_mask():
