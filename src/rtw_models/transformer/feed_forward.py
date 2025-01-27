@@ -20,6 +20,7 @@ class FeedForward(nn.Module):
         self.device = torch.device(device)
         self.layers = nn.Sequential(
             nn.Linear(d_model, d_ff, device=self.device),
+            nn.ReLU(),
             nn.Dropout(dropout) if dropout > 0 else nn.Identity(),
             nn.Linear(d_ff, d_model, device=self.device),
         )
