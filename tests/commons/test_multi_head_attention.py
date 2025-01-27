@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 
-from rtw_models.transformer.multi_head_attention import attention, MultiHeadAttention
+from rtw_models.commons.multi_head_attention import attention, MultiHeadAttention
 
 
 class TestMultiHeadAttention:

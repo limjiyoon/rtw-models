@@ -5,8 +5,8 @@ from __future__ import annotations
 import torch
 from torch import nn
 
-from rtw_models.transformer.feed_forward import FeedForward
-from rtw_models.transformer.multi_head_attention import MultiHeadAttention
+from rtw_models.commons.feed_forward import FeedForward
+from rtw_models.commons.multi_head_attention import MultiHeadAttention
 
 
 class DecoderLayer(nn.Module):
