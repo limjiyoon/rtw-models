@@ -3,7 +3,6 @@
 import math
 
 import torch
-from loguru import logger
 from torch import nn
 
 
@@ -71,18 +70,19 @@ class RotaryEmbedding(nn.Module):
         """Apply rotary positional embeddings to the input tensor.
 
         Args:
-            x (torch.Tensor): Input tensor of shape (batch_size, seq_len, n_heads, d_model)
+            x (torch.Tensor): Input tensor of shape (batch_size, n_heads, seq_len, d_model)
 
         Returns:
             torch.Tensor: Output tensor with rotary positional embeddings.
         """
-        # x.shape: (batch_size, seq_len, n_heads d_model)
+        # x.shape: (batch_size, n_heads, seq_len, d_model)
         assert (
             x.shape[-2] == self.cos.shape[-2]
         ), f"Input sequence length {x.shape[-2]} and max_len {self.cos.shape[-2]} should be equal"
-        assert (
-            x.shape[-1] == self.cos.shape[-1] * 2
-        ), f"Input d_model {x.shape[-1]} should be twice the d_model of cos {self.cos.shape[-1]}"
+        assert x.shape[-1] == self.cos.shape[-1] * 2, (
+            f"Input d_model {x.shape[-1]} should be twice the d_model of cos {self.cos.shape[-1]}"
+            f"\t{x.shape} vs {self.cos.shape}"
+        )
         assert x.device == self.device, f"Layer device {self.device} and Input device {x.device} should be equivalent"
 
         # x_real.shape: (batch_size, seq_len, n_heads, d_model // 2)
